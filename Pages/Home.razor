@@ -1,0 +1,37 @@
+﻿@page "/"
+
+<PageTitle>Polymorfismus</PageTitle>
+
+<h1>Polymorfismus</h1>
+
+<p>Všechna zvířata jsou v jednom seznamu typu <strong>List&lt;Zvire&gt;</strong>.</p>
+
+<table class="table">
+    <!--Tvorba tabulky pro výpis seznamu-->
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <th>Zvuk</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var zvire in seznamZvirat)    //Uloží každou položku (objekt - Pes, Kočka...) ze seznamu do proměnné zvíře
+        {
+            <tr>
+                <td>@zvire.Jmeno</td>
+                <td>@zvire.VydejZvuk()</td> <!--I když pracujeme s obecným typem - zvire, spouštíme metodu konkrétního objektu - Pes, Kočka...-->
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code{
+    private List<Models.Zvire> seznamZvirat = new List<Models.Zvire>();  //Vytváříme seznam, který umí držet cokoliv, co je "Zvire"
+
+    protected override void OnInitialized()         //Metoda, která proběhne při načtení okna
+    {
+        seznamZvirat.Add(new Models.Pes { Jmeno = "Azor" });    //Vytvoření instancí jednotlivých zvířat a následné přidání do seznamu
+        seznamZvirat.Add(new Models.Kocka { Jmeno = "Mourek" });
+        seznamZvirat.Add(new Models.Koza { Jmeno = "Líza" });
+    }
+}
